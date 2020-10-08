@@ -5,6 +5,7 @@
   "bugs": {
     "url": "https://github.com/jaredrcleghorn/alabama-power/issues"
   },
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jaredrcleghorn/alabama-power.git"
