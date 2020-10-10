@@ -42,4 +42,15 @@ export default class AlabamaPower {
 		return this.#jwt
 			.then(() => null)
 	}
+
+	getAccountNumbers() {
+		return (this.#jwt ?? Promise.reject())
+			.then(jwt => fetch('https://customerservice2api.southerncompany.com/api/account/getAllAccounts', {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}))
+			.then(response => response.json())
+			.then(json => json.Data.map(account => account.AccountNumber))
+	}
 }
