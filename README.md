@@ -1,5 +1,7 @@
 # alabama-power
 
+[![CircleCI](https://circleci.com/gh/jaredrcleghorn/alabama-power.svg?style=shield)](https://circleci.com/gh/jaredrcleghorn/alabama-power)
+
 ## Contributing
 
 You will need [Node](https://nodejs.org/). To install dependencies, move into
