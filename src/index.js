@@ -53,4 +53,40 @@ export default class AlabamaPower {
 			.then(response => response.json())
 			.then(json => json.Data.map(account => account.AccountNumber))
 	}
+
+	getCurrentBill(accountNumber) {
+		return (this.#jwt ?? Promise.reject())
+			.then(jwt => fetch(`https://customerservice2api.southerncompany.com/api/account/getAccountDetailLight/${accountNumber}`, {
+				headers: {
+					Authorization: `Bearer ${jwt}`,
+				},
+			}))
+			.then(response => Promise.all([this.#jwt, response.json()]))
+			.then(([jwt, json]) => {
+				const accountCategory = json.Data.AccountCategory
+
+				const match = json.Data.AccountOpenedDate.match(/(\d+)-0*(\d+)-0*(\d+)/)
+				const startDate = `${match[1]}-${match[3]}-${match[2]}`
+
+				const today = new Date()
+				const endDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+
+				return fetch(`https://customerservice2api.southerncompany.com/api/Billing/getHistory/${accountNumber}/APC/${accountCategory}/${startDate}/${endDate}/false`, {
+					headers: {
+						Authorization: `Bearer ${jwt}`,
+					},
+				})
+			})
+			.then(response => response.json())
+			.then(json => {
+				const currentBill = json.Data.find(element => element.Description === 'Bill')
+
+				return {
+					billingPeriod: currentBill.ServicePeriod,
+					amount: currentBill.Amount,
+					totalUsage: Number.parseInt(currentBill.TotalUsage1),
+					numberOfDaysInBillingPeriod: currentBill.DaysInBillingPeriod,
+				}
+			})
+	}
 }

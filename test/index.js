@@ -1,9 +1,11 @@
 import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
+import chaiThings from 'chai-things'
 import config from '../config.json'
 import AlabamaPower from '../lib'
 
 chai.use(chaiAsPromised)
+chai.use(chaiThings)
 
 chai.should()
 
@@ -52,7 +54,38 @@ describe('AlabamaPower', function() {
 		})
 		context('when not logged in', function() {
 			it('should return a promise that rejects', function() {
-				alabamaPower.getAccountNumbers().should.be.rejected
+				return alabamaPower.getAccountNumbers().should.be.rejected
+			})
+		})
+	})
+	describe('#getCurrentBill', function() {
+		context('when logged in and account number is valid', function() {
+			it('should return a promise that resolves to a bill', function() {
+				return alabamaPower.logIn(username, password)
+					.then(() => alabamaPower.getAccountNumbers())
+					.then(accountNumbers => alabamaPower.getCurrentBill(accountNumbers[0]))
+					.then(currentBill => {
+						const billingPeriodDates = currentBill.billingPeriod.split(' - ')
+
+						billingPeriodDates.should.have.lengthOf(2)
+						billingPeriodDates.should.all.match(/^[A-Z][a-z]{2} \d{1,2}$/)
+
+						currentBill.amount.should.be.a('number')
+						currentBill.totalUsage.should.satisfy(Number.isInteger)
+						currentBill.numberOfDaysInBillingPeriod.should.satisfy(Number.isInteger)
+					})
+			})
+		})
+		context('when logged in and account number is invalid', function() {
+			it('should return a promise that rejects', function() {
+				return alabamaPower.logIn(username, password)
+					.then(() => alabamaPower.getCurrentBill(0))
+					.should.be.rejected
+			})
+		})
+		context('when not logged in', function() {
+			it('should return a promise that rejects', function() {
+				return alabamaPower.getCurrentBill(0).should.be.rejected
 			})
 		})
 	})
