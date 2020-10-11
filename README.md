@@ -1,5 +1,7 @@
 # alabama-power
 
+[![GitHub](https://img.shields.io/github/license/jaredrcleghorn/alabama-power?color=blue)](https://github.com/jaredrcleghorn/alabama-power/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/alabama-power)](https://www.npmjs.com/package/alabama-power)
 [![CircleCI](https://circleci.com/gh/jaredrcleghorn/alabama-power.svg?style=shield)](https://circleci.com/gh/jaredrcleghorn/alabama-power)
 
 Unofficial Alabama Power API client library
