@@ -1,6 +1,6 @@
 {
   "name": "alabama-power",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Unofficial Alabama Power API client library",
   "homepage": "https://github.com/jaredrcleghorn/alabama-power#readme",
   "bugs": {
