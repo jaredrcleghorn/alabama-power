@@ -1,10 +1,13 @@
 {
   "name": "alabama-power",
   "version": "1.0.0",
+  "description": "Unofficial Alabama Power API client library",
   "homepage": "https://github.com/jaredrcleghorn/alabama-power#readme",
   "bugs": {
     "url": "https://github.com/jaredrcleghorn/alabama-power/issues"
   },
+  "license": "MIT",
+  "author": "Jared Cleghorn <jaredrcleghorn@gmail.com> (http://jaredcleghorn.com/)",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
